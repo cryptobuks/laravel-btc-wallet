@@ -11,7 +11,7 @@ class TransactionRepository implements Interfaces\ITransactionRepository {
         //dd($data);
  
   
-        $existing = \App\Models\Transaction::where('txid', '=', $data->txid)->get()->count();
+        $existing = \App\Models\Transaction::where('txid', '=', $data->txid)->where('wallet_id', '=', $wallet_id)->get()->count();
          
         if (!$existing) {    
             $receiverAddress = ""; 

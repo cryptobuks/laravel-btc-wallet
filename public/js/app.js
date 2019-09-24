@@ -36920,6 +36920,36 @@ $(".btn-generate").on("click", function () {
   $("#wallet_id").val(id);
   $("#modalGenerate").modal("show");
 });
+$("#btc").on("change", function () {
+  $.get("/system/price", function (result) {
+    var entry = parseFloat($("#btc").val());
+    var price = result.price;
+    $("#usd").val((entry * price).toFixed(2));
+  });
+});
+$(".btn-create-transaction").on("click", function () {
+  var btc = parseFloat($("#btc").val());
+  var destination = $("#destination").val();
+  var numblocks = $("#numblocks").val();
+  var walletId = $("#senderWalletId").val();
+  $.ajax({
+    url: '/wallet/send',
+    type: 'POST',
+    data: {
+      'amount': btc,
+      'destination': destination,
+      'numblocks': numblocks,
+      'identifier': walletId
+    },
+    datatype: 'application/json',
+    success: function success(data) {
+      alert(data);
+    },
+    error: function error(jqXHR, textStatus, errorThrown) {
+      alert(textStatus);
+    }
+  });
+});
 
 /***/ }),
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Artisan;
+use App\Services\BitGoClient;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\IWalletRepository;
 use App\Repositories\Interfaces\IAddressRepository;
@@ -70,7 +71,7 @@ class WalletController extends Controller
         Artisan::call('sync:wallet', [
             'wallet'  =>   $wallet_identifier  
          ]);
-        $wallet = $this->walletRepository->find_by_identifier($wallet_identifier);
+        $wallet = $this->walletRepository->get_by_identifier($wallet_identifier);
 
         $errors = [];
         if ($wallet->user_id != auth()->user()->id) {

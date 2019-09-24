@@ -121,9 +121,14 @@
                 'address' => $data['address'],
                 'amount'  => $data['amount'],
                 'walletPassphrase' => $data['passphrase'],
-                'numBlocks' => $data['numblocks']
+                'numBlocks' => intval($data['numblocks'])
             ]);  
             return $response;
+        }
+
+
+        public function check_receiver($address) {
+            return true;
         }
     }
 

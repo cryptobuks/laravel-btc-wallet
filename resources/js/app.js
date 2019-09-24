@@ -14,3 +14,38 @@ $(".btn-generate").on("click", function(){
     $("#wallet_id").val(id);
     $("#modalGenerate").modal("show");
 }); 
+
+$("#btc").on("change", function(){
+    $.get("/system/price", function(result){
+        let entry = parseFloat($("#btc").val());
+        let price = result.price;
+        $("#usd").val((entry * price).toFixed(2));
+    });
+});
+
+$(".btn-create-transaction").on("click", function(){
+    let btc = parseFloat($("#btc").val());
+    let destination = $("#destination").val();
+    let numblocks = $("#numblocks").val();
+    let walletId = $("#senderWalletId").val();
+
+    $.ajax({
+        url: '/wallet/send',
+        type: 'POST',
+        data: { 
+            'amount': btc,
+            'destination' : destination,
+            'numblocks': numblocks,
+            'identifier' : walletId
+        },
+        datatype: 'application/json',
+        success: function (data) { 
+            alert(data);
+         },
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert(textStatus);
+        }
+    });
+
+
+});
