@@ -127,9 +127,15 @@
         }
 
 
-        public function check_receiver($address) {
-            return true;
+        public function check_receiver($data) {
+            $url = 'api/v2/'. $data['coin'] .'/verifyaddress';
+            $response = $this->post($url, [
+                'address' => $data['address']
+            ]);  
+            return $response->isValid;
         }
+
+        
     }
 
 

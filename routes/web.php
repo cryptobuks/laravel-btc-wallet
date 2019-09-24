@@ -23,3 +23,5 @@ Route::post('/wallet/generate/new', 'WalletController@generate_wallet');
 Route::post('/wallet/send', 'WalletController@send');
 
 Route::get('/wallet/transactions/{identifier}', 'WalletController@transactions');
+
+Route::get('/system/getprice/{code}', 'WalletController@getprice');

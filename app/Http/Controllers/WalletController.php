@@ -85,12 +85,15 @@ class WalletController extends Controller
         }
 
         $client = new BitGoClient();
-        if (!$client->check_receiver($destination)){
+        if (!$client->check_receiver([
+                'coin' => $wallet->currency->code, 
+                'address' => $destination
+            ])){
             $errors[] = "Invalid destination";
         }
         
         if (count($errors)) {
-            return response($errors, 500)->header('Content-Type', 'application/json');
+            return response(['errors' => $errors], 500);
         } else {
             Artisan::call('generate:transaction', [
                 'wallet'  =>   $wallet_identifier ,
@@ -98,7 +101,15 @@ class WalletController extends Controller
                 'destination' => $destination,
                 'numblocks' => $numblocks
              ]);
-             return response('Transaction created', 201)->header('Content-Type', 'application/json');
+             return response([ 'result' => 'Transaction created, redirecting to transactions page' ], 201);
         }
+    }
+
+    public function getprice(Request $request, $code) {
+        $client = new BitGoClient();
+        $price = $client->get_currency_price_in_usd($code);
+        return response([
+            'price' => $price
+        ], 200);
     }
 }

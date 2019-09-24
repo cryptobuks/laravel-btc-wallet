@@ -36921,7 +36921,7 @@ $(".btn-generate").on("click", function () {
   $("#modalGenerate").modal("show");
 });
 $("#btc").on("change", function () {
-  $.get("/system/price", function (result) {
+  $.get("/system/getprice/tbtc", function (result) {
     var entry = parseFloat($("#btc").val());
     var price = result.price;
     $("#usd").val((entry * price).toFixed(2));
@@ -36943,10 +36943,15 @@ $(".btn-create-transaction").on("click", function () {
     },
     datatype: 'application/json',
     success: function success(data) {
-      alert(data);
+      $("#success").html(data.result);
+      setTimeout(function () {
+        window.location.href = '/wallet/transactions/' + walletId;
+      }, 2000);
     },
     error: function error(jqXHR, textStatus, errorThrown) {
-      alert(textStatus);
+      var result = JSON.parse(jqXHR.responseText);
+      var text = result.errors.join();
+      $("#errors").html(text);
     }
   });
 });

@@ -16,7 +16,7 @@ $(".btn-generate").on("click", function(){
 }); 
 
 $("#btc").on("change", function(){
-    $.get("/system/price", function(result){
+    $.get("/system/getprice/tbtc", function(result){
         let entry = parseFloat($("#btc").val());
         let price = result.price;
         $("#usd").val((entry * price).toFixed(2));
@@ -40,10 +40,15 @@ $(".btn-create-transaction").on("click", function(){
         },
         datatype: 'application/json',
         success: function (data) { 
-            alert(data);
+            $("#success").html(data.result);
+            setTimeout(function(){
+                window.location.href='/wallet/transactions/' + walletId;
+            }, 2000);
          },
         error: function (jqXHR, textStatus, errorThrown) { 
-            alert(textStatus);
+            let result = JSON.parse(jqXHR.responseText);
+            let text = result.errors.join();
+            $("#errors").html(text);
         }
     });
 

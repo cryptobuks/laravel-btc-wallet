@@ -111,7 +111,8 @@
       </div>
       
       <div class="modal-body">
-        <p id="errors"></p>
+        <p id="errors" style="color: red;"></p>
+        <p id="success" style="color: green;"></p>
         <p id="transactionContent">
           <form id="frmTransaction">
             <input type="hidden" id="senderWalletId" />

@@ -48,7 +48,7 @@ class HomeController extends Controller
             }
         }
         $data = [
-            'price' => $client->get_currency_price_in_usd('tbtc'),
+            //'price' => $client->get_currency_price_in_usd('tbtc'),
             'wallets' => $this->walletRepository->get_by_user(auth()->user()->id)
         ];
 
