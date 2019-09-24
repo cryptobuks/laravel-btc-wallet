@@ -8,24 +8,31 @@ namespace App\Repositories;
 class TransactionRepository implements Interfaces\ITransactionRepository {
 
     public function create($wallet_id, $data){
-        $receiverAddress = ""; 
-        foreach ($data->outputs as $output) {
-            if ($output->value == $data->value){
-                $receiverAddress = $output->address;
-                break;
-            }
-        }
+        //dd($data);
+ 
   
         $existing = \App\Models\Transaction::where('txid', '=', $data->txid)->get()->count();
          
         if (!$existing) {    
+            $receiverAddress = ""; 
+            foreach ($data->outputs as $output) {
+    
+                //var_dump($output->value, $data->value);
+                
+                //dd($output, $data);
+                if (($output->value == $data->baseValue) || ($data->type=='send' && $output->value == -1 * $data->baseValue)){
+                    $receiverAddress = $output->address;
+                    break;
+                }
+            } 
+
             return \App\Models\Transaction::create([
                 'wallet_id'          => $wallet_id,
                 'txid'               => $data->txid,
                 'tx'                 => json_encode($data),
                 'sender_address'     => $data->inputs[0]->address,
                 'receiver_address'   => $receiverAddress,
-                'amount'             => $data->baseValue,
+                'amount'             => abs($data->baseValue),
                 'fee'                => $data->feeString
             ]);
         }

@@ -115,6 +115,19 @@
             return $result;
         }
 
+        public function send_transaction($data){
+            $url = 'api/v2/'.  $data['coin'] . '//wallet/' . $data['id'] . '//sendcoins';
+            $response = $this->post($url, [
+                'address' => $data['address'],
+                'amount'  => $data['amount'],
+                'walletPassphrase' => $data['passphrase'],
+                'numBlocks' => $data['numblocks']
+            ]); 
+
+            
+            return $response;
+        }
+
         
         
 
