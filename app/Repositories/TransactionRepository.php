@@ -5,7 +5,7 @@ use App\Services\BitGoClient as BitGoClient;
 
 namespace App\Repositories;
 
-class AddressRepository implements Interfaces\ITransactionRepository {
+class TransactionRepository implements Interfaces\ITransactionRepository {
 
     public function create($wallet_id, $data){
         return \App\Models\Transaction::create([
@@ -32,8 +32,10 @@ class AddressRepository implements Interfaces\ITransactionRepository {
         return \App\Models\Transaction::where('txid', '=', $txid)->get();
     }
 
-    public function get_by_wallet($wallet_id) {
-        return \App\Models\Transaction::where('wallet_id', '=', $wallet_id)->get();
+    public function get_by_wallet($wallet_id) { 
+        return \App\Models\Transaction::whereIn('wallet_id', function($query) use ($wallet_id) {
+            $query->from('wallets')->where('identifier', '=', $wallet_id)->select('id');
+        })->get();
     }
 }
 ?>

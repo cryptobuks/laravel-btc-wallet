@@ -6,25 +6,28 @@ use Artisan;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\IWalletRepository;
 use App\Repositories\Interfaces\IAddressRepository;
+use App\Repositories\Interfaces\ITransactionRepository;
 
 class WalletController extends Controller
 {
     //
     private $walletRepository;
     private $addressRepository;
+    private $transactionRepository;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(IWalletRepository $walletRepository , IAddressRepository $addressRepository)
+    public function __construct(IWalletRepository $walletRepository , IAddressRepository $addressRepository, ITransactionRepository $transactionRepository)
     {
         
         $this->middleware('auth'); 
 
         $this->walletRepository = $walletRepository;
         $this->addressRepository = $addressRepository;
+        $this->transactionRepository = $transactionRepository;
     }
 
 
@@ -47,9 +50,15 @@ class WalletController extends Controller
          return redirect('home');   
     }
 
-    public function transactions(Request $request){
+    public function transactions(Request $request, $identifier){ 
         Artisan::call('sync:transactions', [
-            //'wallet'  => $request->input('wallet_id')
+            'wallet'  => $request->input(' {{ $identifier }} ')
          ]);
+        $transactions = $this->transactionRepository->get_by_wallet($identifier);
+        $wallet = $this->walletRepository->get_by_identifier($identifier);
+        return view('wallet.transactions', [
+            'transactions' => $transactions,
+            'wallet'       => $wallet
+        ]);
     }
 }

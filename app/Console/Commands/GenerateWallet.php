@@ -58,7 +58,7 @@ class GenerateWallet extends Command
             
             $newWallet = $client->create_wallet([
                 'coin' => $currency->code,
-                'label'=> 'Wallet - '.$currency,
+                'label'=> 'Wallet - '.$currency->code,
                 'passphrase' => Str::random(20)
             ]);
 

@@ -35,7 +35,7 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item btn-send" data-id="{{ $wallet->identifier }}" href="#">Send</a>
                                                 <a class="dropdown-item btn-generate" data-id="{{$wallet->identifier}}" href="#">Generate new receive address</a>
-                                                <a class="dropdown-item" href="{{ url('/transactions/'. $wallet->identifier) }}">Transactions</a>
+                                                <a class="dropdown-item" href="{{ url('/wallet/transactions/'. $wallet->identifier) }}">Transactions</a>
                                                 
                                             </div>
                                         </div>
