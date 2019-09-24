@@ -29,11 +29,16 @@ class WalletController extends Controller
 
 
     public function generate(Request $request){
-        Artisan::call('address:generate', [
+        Artisan::call('generate:address', [
             'wallet'  => $request->input('wallet_id')
          ]);
 
-         return redirect('home');
-        
+         return redirect('home');   
+    }
+
+    public function transactions(Request $request){
+        Artisan::call('sync:transactions', [
+            //'wallet'  => $request->input('wallet_id')
+         ]);
     }
 }

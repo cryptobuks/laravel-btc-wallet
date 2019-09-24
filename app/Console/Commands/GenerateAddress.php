@@ -19,7 +19,7 @@ class GenerateAddress extends Command
      *
      * @var string
      */
-    protected $signature = 'address:generate {wallet}';
+    protected $signature = 'generate:address {wallet}';
 
     /**
      * The console command description.

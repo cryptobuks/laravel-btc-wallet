@@ -110,6 +110,8 @@
             $result = [ 
                 'transfers'   => $response->transfers
             ];
+
+            dd($result);
             return $result;
         }
 

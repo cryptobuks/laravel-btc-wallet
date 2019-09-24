@@ -18,7 +18,7 @@ class GenerateWallets extends Command
      *
      * @var string
      */
-    protected $signature = 'wallet:generate {user?}';
+    protected $signature = 'generate:wallet {user?}';
 
     /**
      * The console command description.

@@ -14,7 +14,7 @@ class UpdateWallets extends Command
      *
      * @var string
      */
-    protected $signature = 'wallet:update {wallet?}';
+    protected $signature = 'sync:wallet {wallet?}';
 
     /**
      * The console command description.
