@@ -16,7 +16,7 @@ class UserRegisteredListener
      */
     public function handle(Registered $event)
     {
-        Artisan::call('generate:wallet', [
+        Artisan::call('generate:missing', [
            'user'  => $event -> user -> id
         ]);
     }

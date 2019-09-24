@@ -28,9 +28,20 @@ class WalletController extends Controller
     }
 
 
-    public function generate(Request $request){
+    public function generate_address(Request $request){
         Artisan::call('generate:address', [
             'wallet'  => $request->input('wallet_id')
+         ]);
+
+         return redirect('home');   
+    }
+
+    public function generate_wallet(){
+        // initial - hardcode for TBTC
+        $currency = 'tbtc';
+        Artisan::call('generate:wallet', [
+            'user'  => auth()->user()->id,
+            'currency' => $currency
          ]);
 
          return redirect('home');   

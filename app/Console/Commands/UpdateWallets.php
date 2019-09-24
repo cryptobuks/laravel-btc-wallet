@@ -47,7 +47,7 @@ class UpdateWallets extends Command
         $client = new BitGoClient();
         $requested_wallet = $this->argument('wallet');
         if (!$requested_wallet) {    
-            print("Running scheduled job");
+            //print("Running scheduled job");
             foreach ($wallets as $wallet) {
                 $wallet_data = $client->get_wallet_info([
                     'coin' => $wallet->currency->code,
@@ -59,15 +59,16 @@ class UpdateWallets extends Command
                 ]);
             }
         } else {
-            print("Updating Wallet" . $requested_wallet);
-            $wallet = $this->walletRepository->get_by_identifier($wallet);
+            //print("Updating Wallet" . $requested_wallet);
+            $wallet = $this->walletRepository->get_by_identifier($requested_wallet);
             $wallet_data = $client->get_wallet_info([
                 'coin' => $wallet->currency->code,
                 'id' => $wallet->identifier
             ]);
 
             $this->walletRepository->update($wallet->identifier, [
-                'balance' => $wallet_data['balance']
+                'balance' => $wallet_data['balance'],
+                'last_update_time' => now()
             ]);
         }
 

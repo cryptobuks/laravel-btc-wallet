@@ -33,6 +33,11 @@ class WalletRepository implements \App\Repositories\Interfaces\IWalletRepository
     public function update($id, $data){
         \App\Models\Wallet::where('identifier', '=', $id)->update($data);
     }
+
+    public function get_currency_by_code($code){
+        return \App\Models\Currency::where('code', '=', $code)->first();
+        
+    }
  
 }
 

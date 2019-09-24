@@ -19,5 +19,6 @@ Auth::routes(['reset' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/wallet/generate', 'WalletController@generate');
+Route::post('/wallet/generate/address', 'WalletController@generate_address');
+Route::post('/wallet/generate/new', 'WalletController@generate_wallet');
 Route::get('/wallet/transactions', 'WalletController@transactions');
