@@ -61,4 +61,43 @@ class WalletController extends Controller
             'wallet'       => $wallet
         ]);
     }
+
+    public function send(Request $request){
+        $wallet_identifier = $request->input('identifier');
+        $amount = $request->input('amount');
+        $destination = $request->input('destination');
+        $numblocks = $request->input('numblocks');
+        Artisan::call('sync:wallet', [
+            'wallet'  =>   $wallet_identifier  
+         ]);
+        $wallet = $this->walletRepository->find_by_identifier($wallet_identifier);
+
+        $errors = [];
+        if ($wallet->user_id != auth()->user()->id) {
+            $errors[] = "Unauthorized access";
+        }
+
+        $units = $wallet->currency->units;
+
+        if ($amount * $units > $wallet->balance) {
+            $errors[] = "Not enough balance";
+        }
+
+        $client = new BitGoClient();
+        if (!$client->check_receiver($destination)){
+            $errors[] = "Invalid destination";
+        }
+        
+        if (count($errors)) {
+            return response($errors, 500)->header('Content-Type', 'application/json');
+        } else {
+            Artisan::call('generate:transaction', [
+                'wallet'  =>   $wallet_identifier ,
+                'amount'  =>   $amount * $units,
+                'destination' => $destination,
+                'numblocks' => $numblocks
+             ]);
+             return response('Transaction created', 201)->header('Content-Type', 'application/json');
+        }
+    }
 }

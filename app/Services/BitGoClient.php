@@ -122,15 +122,9 @@
                 'amount'  => $data['amount'],
                 'walletPassphrase' => $data['passphrase'],
                 'numBlocks' => $data['numblocks']
-            ]); 
-
-            
+            ]);  
             return $response;
         }
-
-        
-        
-
     }
 
 

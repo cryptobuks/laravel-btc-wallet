@@ -111,9 +111,33 @@
       </div>
       
       <div class="modal-body">
-        <p>
+        <p id="errors"></p>
+        <p id="transactionContent">
           <form id="frmTransaction">
-
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="btc">BTC Amount</label>
+                <input type="text" class="form-control" id="btc" placeholder="BTC Amount">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="usd">USD Value</label>
+                <input type="text" class="form-control" id="usd" placeholder="USD Value">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="destination">Address</label>
+              <input type="text" class="form-control" id="destination" placeholder="Enter destination address">
+            </div>
+            <div class="form-group">
+                <label for="numblocks">Confirmation target</label>
+                <select id="inputState" class="form-control">
+                  
+                  @for ($i = 2; $i < 10; $i++)
+                    <option value="{{$i}}">{{$i}} blocks</option>
+                  @endfor
+                  
+                </select>
+              </div>         
           </form>
         </p>
       </div>
