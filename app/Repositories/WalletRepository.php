@@ -7,6 +7,11 @@ namespace App\Repositories;
 
 class WalletRepository implements \App\Repositories\Interfaces\IWalletRepository {
 
+
+    public function list(){
+        return \App\Models\Wallet::get();
+    }
+
     public function create($data){
         return \App\Models\Wallet::create($data);
     }
@@ -17,7 +22,8 @@ class WalletRepository implements \App\Repositories\Interfaces\IWalletRepository
         return $currencies;
     }
 
-    public function get_by_id($id){
+    public function get_by_identifier($identifier){
+        return \App\Models\Wallet::where('identifier', '=', $identifier)->get()->first();
     }
 
     public function get_by_user($user_id){
@@ -25,7 +31,7 @@ class WalletRepository implements \App\Repositories\Interfaces\IWalletRepository
     }
 
     public function update($id, $data){
-
+        \App\Models\Wallet::where('identifier', '=', $id)->update($data);
     }
  
 }

@@ -36910,6 +36910,17 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 
+$(".btn-send").on("click", function () {
+  var id = $(this).data("id");
+  $("#senderWalletId").val(id);
+  $("#modalSend").modal("show");
+});
+$(".btn-generate").on("click", function () {
+  var id = $(this).data("id");
+  $("#wallet_id").val(id);
+  $("#modalGenerate").modal("show");
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

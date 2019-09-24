@@ -94,6 +94,15 @@
             return $result;
         }
 
+
+        public function generate_address($data) {
+            $url = 'api/v2/'.  $data['coin'] . '//wallet/' . $data['id'] . '//address';
+            $response = $this->post($url);
+            $result = [ 
+                'address'   => $response->address
+            ];
+            return $result;
+        }
         
 
     }
