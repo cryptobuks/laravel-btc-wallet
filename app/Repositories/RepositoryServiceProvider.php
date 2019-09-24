@@ -17,14 +17,17 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\Interfaces\IWalletRepository',
             'App\Repositories\WalletRepository',
-
-
-            
         );
 
         $this->app->bind(
             'App\Repositories\Interfaces\IAddressRepository',
             'App\Repositories\AddressRepository'            
+        );
+
+
+        $this->app->bind(
+            'App\Repositories\Interfaces\ITransactionRepository',
+            'App\Repositories\TransactionRepository'            
         );
         
     }

@@ -103,6 +103,17 @@
             ];
             return $result;
         }
+
+        public function get_transactions_by_wallet($data){
+            $url = 'api/v2/'.  $data['coin'] . '//wallet/' . $data['id'] . '//transfer';
+            $response = $this->get($url);
+            $result = [ 
+                'transfers'   => $response->transfers
+            ];
+            return $result;
+        }
+
+        
         
 
     }
