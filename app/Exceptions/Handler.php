@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        dd($exception);
+        //dd($exception);
         return response()->view('errors.custom', [
             $exception
         ]);
