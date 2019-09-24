@@ -3,9 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\BitGoClient;
+use App\Repositories\Interfaces\IWalletRepository; 
+use App\Repositories\Interfaces\ITransactionRepository; 
 
 class SyncTransactions extends Command
 {
+    private $walletRepository;
+    private $transactionRepository;
     /**
      * The name and signature of the console command.
      *
@@ -35,8 +40,29 @@ class SyncTransactions extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(IWalletRepository $walletRepository, ITransactionRepository $transactionRepository)
     {
+        $this->walletRepository = $walletRepository;
+        $this->transactionRepository = $transactionRepository;
         //
+
+        
+        $wallet_id = $this->argument('wallet');
+         
+        if (!$wallet_id) {
+            return;
+        }
+        $client = new BitGoClient();
+        $wallet = $this->walletRepository->get_by_identifier($wallet_id);
+        $transactions = $client-> get_transactions_by_wallet([
+            'coin' => $wallet->currency->code,
+            'id' => $wallet->identifier
+        ])['transfers']; 
+        foreach ($transactions as $transaction) {
+            //dd($transaction);
+            $this->transactionRepository->create($wallet->id, $transaction);
+        }
+
+
     }
 }

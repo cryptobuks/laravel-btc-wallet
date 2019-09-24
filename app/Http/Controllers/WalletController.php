@@ -52,7 +52,7 @@ class WalletController extends Controller
 
     public function transactions(Request $request, $identifier){ 
         Artisan::call('sync:transactions', [
-            'wallet'  => $request->input(' {{ $identifier }} ')
+            'wallet'  =>   $identifier  
          ]);
         $transactions = $this->transactionRepository->get_by_wallet($identifier);
         $wallet = $this->walletRepository->get_by_identifier($identifier);

@@ -8,15 +8,27 @@ namespace App\Repositories;
 class TransactionRepository implements Interfaces\ITransactionRepository {
 
     public function create($wallet_id, $data){
-        return \App\Models\Transaction::create([
-            'wallet_id'          => $wallet_id,
-            'txid'               => $data['txid'],
-            'tx'                 => json_encode($data),
-            'sender_address'     => $data['inputs'][0]['address'],
-            'receiver_address'   => $data['outputs'][0]['address'],
-            'amount'             => $data['baseValue'],
-            'fee'                => $data['fee']
-        ]);
+        $receiverAddress = ""; 
+        foreach ($data->outputs as $output) {
+            if ($output->value == $data->value){
+                $receiverAddress = $output->address;
+                break;
+            }
+        }
+  
+        $existing = \App\Models\Transaction::where('txid', '=', $data->txid)->get()->count();
+         
+        if (!$existing) {    
+            return \App\Models\Transaction::create([
+                'wallet_id'          => $wallet_id,
+                'txid'               => $data->txid,
+                'tx'                 => json_encode($data),
+                'sender_address'     => $data->inputs[0]->address,
+                'receiver_address'   => $receiverAddress,
+                'amount'             => $data->baseValue,
+                'fee'                => $data->feeString
+            ]);
+        }
     }
  
     public function syncronize($wallet_id, $transaction_data) {

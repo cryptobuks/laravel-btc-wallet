@@ -111,7 +111,7 @@
                 'transfers'   => $response->transfers
             ];
 
-            dd($result);
+            //dd($result);
             return $result;
         }
 
