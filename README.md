@@ -69,3 +69,28 @@ Step 9.
 php artisan serve
 ```
 
+
+
+
+## Various commands: 
+
+1. Sync all wallet balances: 
+```
+php artisan sync:wallet
+```
+
+2. Sync wallet transactions 
+```
+php artisan sync:transactions WALLET_ID
+```
+
+3. Generate missing wallets for user 
+```
+php artisan generate:missing USER_ID
+```
+
+4. Generate new receiving address for wallet 
+```
+php artisan generate:address WALLET_ID
+```
+
